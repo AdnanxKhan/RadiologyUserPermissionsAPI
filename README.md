@@ -29,6 +29,8 @@ This solution delivers a complete API module for create user and its permissions
 
 ## 🗂️ Database Setup
 
+##Files can be found in the Database Folder
+
 ### Option 1: Using `.bak` File
 1. Open SQL Server Management Studio (SSMS).
 2. Right-click **Databases** → Restore Database.
