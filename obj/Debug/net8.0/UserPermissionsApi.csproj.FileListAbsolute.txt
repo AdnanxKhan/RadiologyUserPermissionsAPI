@@ -97,3 +97,4 @@ C:\Users\Nimap\Desktop\ClientTask\UserPermissionsApi\UserPermissionsApi\bin\Debu
 C:\Users\Nimap\Desktop\ClientTask\UserPermissionsApi\UserPermissionsApi\bin\Debug\net8.0\RBush.dll
 C:\Users\Nimap\Desktop\ClientTask\UserPermissionsApi\UserPermissionsApi\bin\Debug\net8.0\SixLabors.Fonts.dll
 C:\Users\Nimap\Desktop\ClientTask\UserPermissionsApi\UserPermissionsApi\bin\Debug\net8.0\System.IO.Packaging.dll
+C:\Users\Nimap\Desktop\ClientTask\UserPermissionsApi\UserPermissionsApi\obj\Debug\net8.0\UserPermissionsApi.sourcelink.json

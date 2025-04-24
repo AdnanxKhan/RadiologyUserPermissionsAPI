@@ -720,5 +720,434 @@ namespace UserPermissionsApi.Controllers
 
             return Ok("Session killed successfully.");
         }
+        [HttpPost("AssignInstitutionToUser")]
+        public async Task<IActionResult> AssignInstitution(int userId, int institutionId, int assignTo)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+
+            const int ASSIGN_INSTITUTION_PERMISSION_ID = 4; // Example permission ID, adjust accordingly
+
+            if (!await HasPermission(userId, ASSIGN_INSTITUTION_PERMISSION_ID))
+                return Forbid("User does not have permission to assign institutions.");
+
+            using var command = new SqlCommand(@"
+                IF EXISTS (SELECT 1 FROM UserInstitutionMapping WHERE UserId = @UserId AND InstitutionId = @InstitutionId)
+                THROW 50000, 'Institution already assigned to the user.', 1;
+
+                INSERT INTO UserInstitutionMapping (UserId, InstitutionId, IsActive, CreatedDate, UpdatedDate)
+                VALUES (@UserId, @InstitutionId, @IsActive, @CreatedDate, @UpdatedDate)", connection);
+
+            command.Parameters.AddWithValue("@UserId", assignTo);
+            command.Parameters.AddWithValue("@InstitutionId", institutionId);
+            command.Parameters.AddWithValue("@IsActive", true);
+            command.Parameters.AddWithValue("@CreatedDate", DateTime.Now.ToString("yyyy-MM-dd"));
+            command.Parameters.AddWithValue("@UpdatedDate", DateTime.Now.ToString("yyyy-MM-dd"));
+
+            await command.ExecuteNonQueryAsync();
+            return Ok("Institution assigned successfully.");
+        }
+        [HttpPatch("UnassignInstitution")]
+        public async Task<IActionResult> UnassignInstitution(int userId, int institutionId)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+
+            const int UNASSIGN_INSTITUTION_PERMISSION_ID = 5; // Example permission ID, adjust accordingly
+
+            if (!await HasPermission(userId, UNASSIGN_INSTITUTION_PERMISSION_ID))
+                return Forbid("User does not have permission to unassign institutions.");
+
+            using var command = new SqlCommand("UPDATE UserInstitutionMapping SET IsActive = 0, UpdatedDate=@UpdatedDate WHERE UserId = @UserId AND InstitutionId = @InstitutionId", connection);
+            command.Parameters.AddWithValue("@UserId", userId);
+            command.Parameters.AddWithValue("@InstitutionId", institutionId);
+            command.Parameters.AddWithValue("@UpdatedDate", DateTime.Now.ToString("yyyy-MM-dd"));
+
+            int affected = await command.ExecuteNonQueryAsync();
+            if (affected == 0)
+                return NotFound("Institution was not assigned to the user.");
+
+            return Ok("Institution unassigned successfully.");
+        }
+        [HttpPost("AssignAETitleToUser")]
+        public async Task<IActionResult> AssignAETitle(int userId, int aeTitleId, int assignTo)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+
+            const int ASSIGN_AE_TITLE_PERMISSION_ID = 4; // Adjust with the correct permission ID
+
+            if (!await HasPermission(userId, ASSIGN_AE_TITLE_PERMISSION_ID))
+                return Forbid("User does not have permission to assign AE titles.");
+
+            using var command = new SqlCommand(@"
+                IF EXISTS (SELECT 1 FROM UserAETitleMapping WHERE UserId = @UserId AND AETitleId = @AETitleId)
+                THROW 50000, 'AE Title already assigned to the user.', 1;
+
+                INSERT INTO UserAETitleMapping (UserId, AETitleId, IsActive, CreatedDate, UpdatedDate)
+                VALUES (@UserId, @AETitleId, @IsActive, @CreatedDate, @UpdatedDate)", connection);
+
+            command.Parameters.AddWithValue("@UserId", assignTo);
+            command.Parameters.AddWithValue("@AETitleId", aeTitleId);
+            command.Parameters.AddWithValue("@IsActive", true);
+            command.Parameters.AddWithValue("@CreatedDate", DateTime.Now.ToString("yyyy-MM-dd"));
+            command.Parameters.AddWithValue("@UpdatedDate", DateTime.Now.ToString("yyyy-MM-dd"));
+
+            await command.ExecuteNonQueryAsync();
+            return Ok("AE Title assigned successfully.");
+        }
+        [HttpPatch("UnassignAETitle")]
+        public async Task<IActionResult> UnassignAETitle(int userId, int aeTitleId)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+
+            const int UNASSIGN_AE_TITLE_PERMISSION_ID = 5; // Adjust with the correct permission ID
+
+            if (!await HasPermission(userId, UNASSIGN_AE_TITLE_PERMISSION_ID))
+                return Forbid("User does not have permission to unassign AE titles.");
+
+            using var command = new SqlCommand("UPDATE UserAETitleMapping SET IsActive = 0, UpdatedDate = @UpdatedDate WHERE UserId = @UserId AND AETitleId = @AETitleId", connection);
+            command.Parameters.AddWithValue("@UserId", userId);
+            command.Parameters.AddWithValue("@AETitleId", aeTitleId);
+            command.Parameters.AddWithValue("@UpdatedDate", DateTime.Now.ToString("yyyy-MM-dd"));
+
+            int affected = await command.ExecuteNonQueryAsync();
+            if (affected == 0)
+                return NotFound("AE Title was not assigned to the user.");
+
+            return Ok("AE Title unassigned successfully.");
+        }
+        [HttpPost("AssignModalityToUser")]
+        public async Task<IActionResult> AssignModality(int userId, int modalityId, int assignTo)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+
+            const int ASSIGN_MODALITY_PERMISSION_ID = 4; // Adjust with the correct permission ID
+
+            if (!await HasPermission(userId, ASSIGN_MODALITY_PERMISSION_ID))
+                return Forbid("User does not have permission to assign modalities.");
+
+            using var command = new SqlCommand(@"
+                IF EXISTS (SELECT 1 FROM UserModalityMapping WHERE UserId = @UserId AND ModalityId = @ModalityId)
+                THROW 50000, 'Modality already assigned to the user.', 1;
+
+                INSERT INTO UserModalityMapping (UserId, ModalityId, IsActive, CreatedDate, UpdatedDate)
+                VALUES (@UserId, @ModalityId, @IsActive, @CreatedDate, @UpdatedDate)", connection);
+
+            command.Parameters.AddWithValue("@UserId", assignTo);
+            command.Parameters.AddWithValue("@ModalityId", modalityId);
+            command.Parameters.AddWithValue("@IsActive", true);
+            command.Parameters.AddWithValue("@CreatedDate", DateTime.Now.ToString("yyyy-MM-dd"));
+            command.Parameters.AddWithValue("@UpdatedDate", DateTime.Now.ToString("yyyy-MM-dd"));
+
+            await command.ExecuteNonQueryAsync();
+            return Ok("Modality assigned successfully.");
+        }
+        [HttpPatch("UnassignModality")]
+        public async Task<IActionResult> UnassignModality(int userId, int modalityId)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync();
+
+            const int UNASSIGN_MODALITY_PERMISSION_ID = 5; // Adjust with the correct permission ID
+
+            if (!await HasPermission(userId, UNASSIGN_MODALITY_PERMISSION_ID))
+                return Forbid("User does not have permission to unassign modalities.");
+
+            using var command = new SqlCommand("UPDATE UserModalityMapping SET IsActive = 0, UpdatedDate = @UpdatedDate WHERE UserId = @UserId AND ModalityId = @ModalityId", connection);
+            command.Parameters.AddWithValue("@UserId", userId);
+            command.Parameters.AddWithValue("@ModalityId", modalityId);
+            command.Parameters.AddWithValue("@UpdatedDate", DateTime.Now.ToString("yyyy-MM-dd"));
+
+            int affected = await command.ExecuteNonQueryAsync();
+            if (affected == 0)
+                return NotFound("Modality was not assigned to the user.");
+
+            return Ok("Modality unassigned successfully.");
+        }
+        [HttpGet("GetInstitutionsAssignedToUser")]
+        public async Task<IActionResult> GetInstitutionsAssignedToUser(int userId)
+        {
+            var institutions = new List<InstitutionData>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                var command = new SqlCommand(@"
+                    SELECT i.Id AS InstitutionId, i.Name AS InstitutionName
+                    FROM Institution i
+                    INNER JOIN UserInstitutionMapping uim ON uim.InstitutionId = i.Id
+                    WHERE uim.UserId = @UserId AND uim.IsActive = 1", connection);
+
+                command.Parameters.AddWithValue("@UserId", userId);
+
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        institutions.Add(new InstitutionData
+                        {
+                            InstitutionId = reader.GetInt32(0),
+                            InstitutionName = reader.GetString(1)
+                        });
+                    }
+                }
+            }
+
+            return Ok(institutions);
+        }
+        [HttpGet("GetAETitlesAssignedToUser")]
+        public async Task<IActionResult> GetAETitlesAssignedToUser(int userId)
+        {
+            var aeTitles = new List<AETitleData>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                var command = new SqlCommand(@"
+                    SELECT a.Id AS AETitleId, a.Name AS AETitle
+                    FROM AETitle a
+                    INNER JOIN UserAETitleMapping uat ON uat.AETitleId = a.Id
+                    WHERE uat.UserId = @UserId AND uat.IsActive = 1", connection);
+
+                command.Parameters.AddWithValue("@UserId", userId);
+
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        aeTitles.Add(new AETitleData
+                        {
+                            AETitleId = reader.GetInt32(0),
+                            AETitle = reader.GetString(1)
+                        });
+                    }
+                }
+            }
+
+            return Ok(aeTitles);
+        }
+        [HttpGet("GetModalitiesAssignedToUser")]
+        public async Task<IActionResult> GetModalitiesAssignedToUser(int userId)
+        {
+            var modalities = new List<ModalityData>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                var command = new SqlCommand(@"
+                    SELECT m.Id AS ModalityId, m.Name AS ModalityName
+                    FROM Modality m
+                    INNER JOIN UserModalityMapping umm ON umm.ModalityId = m.Id
+                    WHERE umm.UserId = @UserId AND umm.IsActive = 1", connection);
+
+                command.Parameters.AddWithValue("@UserId", userId);
+
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        modalities.Add(new ModalityData
+                        {
+                            ModalityId = reader.GetInt32(0),
+                            ModalityName = reader.GetString(1)
+                        });
+                    }
+                }
+            }
+
+            return Ok(modalities);
+        }
+        [HttpGet("GetAssignedResourcesToUser")]
+        public async Task<IActionResult> GetAssignedResourcesToUser(int userId)
+        {
+            var institutions = new List<InstitutionData>();
+            var aeTitles = new List<AETitleData>();
+            var modalities = new List<ModalityData>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                // Fetch institutions
+                var institutionCommand = new SqlCommand(@"
+                    SELECT i.Id AS InstitutionId, i.Name AS InstitutionName
+                    FROM Institution i
+                    INNER JOIN UserInstitutionMapping uim ON uim.InstitutionId = i.Id
+                    WHERE uim.UserId = @UserId AND uim.IsActive = 1", connection);
+                institutionCommand.Parameters.AddWithValue("@UserId", userId);
+                using (var reader = await institutionCommand.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        institutions.Add(new InstitutionData
+                        {
+                            InstitutionId = reader.GetInt32(0),
+                            InstitutionName = reader.GetString(1)
+                        });
+                    }
+                }
+
+                // Fetch AE Titles
+                var aeTitleCommand = new SqlCommand(@"
+                    SELECT a.Id AS AETitleId, a.Name AS AETitle
+                    FROM AETitle a
+                    INNER JOIN UserAETitleMapping uat ON uat.AETitleId = a.Id
+                    WHERE uat.UserId = @UserId AND uat.IsActive = 1", connection);
+                aeTitleCommand.Parameters.AddWithValue("@UserId", userId);
+                using (var reader = await aeTitleCommand.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        aeTitles.Add(new AETitleData
+                        {
+                            AETitleId = reader.GetInt32(0),
+                            AETitle = reader.GetString(1)
+                        });
+                    }
+                }
+
+                // Fetch Modalities
+                var modalityCommand = new SqlCommand(@"
+                    SELECT m.Id AS ModalityId, m.Name AS ModalityName
+                    FROM Modality m
+                    INNER JOIN UserModalityMapping umm ON umm.ModalityId = m.Id
+                    WHERE umm.UserId = @UserId AND umm.IsActive = 1", connection);
+                modalityCommand.Parameters.AddWithValue("@UserId", userId);
+                using (var reader = await modalityCommand.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        modalities.Add(new ModalityData
+                        {
+                            ModalityId = reader.GetInt32(0),
+                            ModalityName = reader.GetString(1)
+                        });
+                    }
+                }
+            }
+
+            var response = new
+            {
+                Institutions = institutions,
+                AETitles = aeTitles,
+                Modalities = modalities
+            };
+
+            return Ok(response);
+        }
+        [HttpGet("GetAllUsersAssignedToInstitution")]
+        public async Task<IActionResult> GetUsersByInstitution(int institutionId)
+        {
+            var users = new List<UserData>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                var query = @"
+                    SELECT u.Username, uc.Name AS UserCategoryName
+                    FROM Users u
+                    INNER JOIN UserInstitutionMapping uim ON uim.UserId = u.Id
+                    INNER JOIN UserCategory uc ON uc.Id = u.UserCategoryId
+                    WHERE uim.InstitutionId = @InstitutionId AND uim.IsActive = 1";
+
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@InstitutionId", institutionId);
+
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            users.Add(new UserData
+                            {
+                                Username = reader.GetString(0),
+                                UserCategoryName = reader.GetString(1)
+                            });
+                        }
+                    }
+                }
+            }
+
+            return Ok(users);
+        }
+        [HttpGet("GetAllUsersAssignedToAETitle")]
+        public async Task<IActionResult> GetUsersByAETitle(int aeTitleId)
+        {
+            var users = new List<UserData>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                var query = @"
+                    SELECT u.Username, uc.Name AS UserCategoryName
+                    FROM Users u
+                    INNER JOIN UserAETitleMapping uat ON uat.UserId = u.Id
+                    INNER JOIN UserCategory uc ON uc.Id = u.UserCategoryId
+                    WHERE uat.AETitleId = @AETitleId AND uat.IsActive = 1";
+
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@AETitleId", aeTitleId);
+
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            users.Add(new UserData
+                            {
+                                Username = reader.GetString(0),
+                                UserCategoryName = reader.GetString(1)
+                            });
+                        }
+                    }
+                }
+            }
+
+            return Ok(users);
+        }
+        [HttpGet("GetAllUsersAssignedToModality")]
+        public async Task<IActionResult> GetUsersByModality(int modalityId)
+        {
+            var users = new List<UserData>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                var query = @"
+                    SELECT u.Username, uc.Name AS UserCategoryName
+                    FROM Users u
+                    INNER JOIN UserModalityMapping umm ON umm.UserId = u.Id
+                    INNER JOIN UserCategory uc ON uc.Id = u.UserCategoryId
+                    WHERE umm.ModalityId = @ModalityId AND umm.IsActive = 1";
+
+                using (var command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@ModalityId", modalityId);
+
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            users.Add(new UserData
+                            {
+                                Username = reader.GetString(0),
+                                UserCategoryName = reader.GetString(1)
+                            });
+                        }
+                    }
+                }
+            }
+
+            return Ok(users);
+        }
     }
 }

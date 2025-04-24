@@ -1,5 +1,53 @@
 [
   {
+    "ContainingType": "UserPermissionsApi.Controllers.ResourceDataController",
+    "Method": "AddAETitle",
+    "RelativePath": "AddAETitle",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "UserPermissionsApi.DTOs.ResourceDataInputDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionsApi.Controllers.ResourceDataController",
+    "Method": "AddInstitution",
+    "RelativePath": "AddInstitution",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "UserPermissionsApi.DTOs.ResourceDataInputDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionsApi.Controllers.ResourceDataController",
+    "Method": "AddModality",
+    "RelativePath": "AddModality",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "UserPermissionsApi.DTOs.ResourceDataInputDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "UserPermissionsApi.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "api/Auth/login",
@@ -39,6 +87,70 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionsApi.Controllers.PatientsController",
+    "Method": "GetPatientsByAETitle",
+    "RelativePath": "api/Patients/GetPatientsByAETitleAssignedToUser",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionsApi.Controllers.PatientsController",
+    "Method": "GetPatientsByInstitution",
+    "RelativePath": "api/Patients/GetPatientsByInstitutionAssignedToUser",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionsApi.Controllers.PatientsController",
+    "Method": "GetPatientsByModality",
+    "RelativePath": "api/Patients/GetPatientsByModalityAssignedToUser",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionsApi.Controllers.PatientsController",
+    "Method": "GetPatientsByUser",
+    "RelativePath": "api/Patients/GetPatientsByUser",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -95,6 +207,84 @@
         "Name": "dto",
         "Type": "UserPermissionsApi.DTOs.PermissionUpdateDTO",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionsApi.Controllers.UsersController",
+    "Method": "AssignAETitle",
+    "RelativePath": "api/Users/AssignAETitleToUser",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "aeTitleId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "assignTo",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionsApi.Controllers.UsersController",
+    "Method": "AssignInstitution",
+    "RelativePath": "api/Users/AssignInstitutionToUser",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "institutionId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "assignTo",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionsApi.Controllers.UsersController",
+    "Method": "AssignModality",
+    "RelativePath": "api/Users/AssignModalityToUser",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "modalityId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "assignTo",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -190,8 +380,120 @@
   },
   {
     "ContainingType": "UserPermissionsApi.Controllers.UsersController",
+    "Method": "GetAETitlesAssignedToUser",
+    "RelativePath": "api/Users/GetAETitlesAssignedToUser",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionsApi.Controllers.UsersController",
     "Method": "GetActiveUsers",
     "RelativePath": "api/Users/getAllActiveUsers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionsApi.Controllers.UsersController",
+    "Method": "GetUsersByAETitle",
+    "RelativePath": "api/Users/GetAllUsersAssignedToAETitle",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "aeTitleId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionsApi.Controllers.UsersController",
+    "Method": "GetUsersByInstitution",
+    "RelativePath": "api/Users/GetAllUsersAssignedToInstitution",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "institutionId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionsApi.Controllers.UsersController",
+    "Method": "GetUsersByModality",
+    "RelativePath": "api/Users/GetAllUsersAssignedToModality",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "modalityId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionsApi.Controllers.UsersController",
+    "Method": "GetAssignedResourcesToUser",
+    "RelativePath": "api/Users/GetAssignedResourcesToUser",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionsApi.Controllers.UsersController",
+    "Method": "GetInstitutionsAssignedToUser",
+    "RelativePath": "api/Users/GetInstitutionsAssignedToUser",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionsApi.Controllers.UsersController",
+    "Method": "GetModalitiesAssignedToUser",
+    "RelativePath": "api/Users/GetModalitiesAssignedToUser",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -430,6 +732,69 @@
     "Parameters": [
       {
         "Name": "patientId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionsApi.Controllers.UsersController",
+    "Method": "UnassignAETitle",
+    "RelativePath": "api/Users/UnassignAETitle",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "aeTitleId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionsApi.Controllers.UsersController",
+    "Method": "UnassignInstitution",
+    "RelativePath": "api/Users/UnassignInstitution",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "institutionId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionsApi.Controllers.UsersController",
+    "Method": "UnassignModality",
+    "RelativePath": "api/Users/UnassignModality",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "modalityId",
         "Type": "System.Int32",
         "IsRequired": false
       }
